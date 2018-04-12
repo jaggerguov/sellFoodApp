@@ -14,7 +14,7 @@
                 <li v-for="(item,index) in goods" class="food-list" ref="foodList">
                     <h1 class="title">{{item.name}}</h1>
                     <ul>
-                        <li v-for="(food,indx) in item.foods" class="food-item border-1px">
+                        <li v-for="(food,indx) in item.foods" class="food-item border-1px" @click="selectFood(food,$event)">
                             <div class="icon">
                                 <img width="57" height="57"  :src="food.icon">
                             </div>
@@ -36,7 +36,8 @@
                 </li>
             </ul>
         </div>
-        <shopcart :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></shopcart>
+        <shopcart ref="shopcart"  :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></shopcart>
+        <food :food='selectedFood' ref="food"></food>
     </div>
   </template>
 
@@ -44,6 +45,7 @@
     import BScroll from 'better-scroll';
     import shopcart from '../shopcart/shopcart';
     import cartcontrol from '../cartcontrol/cartcontrol';
+    import food from '../food/food';
     const ERR_OK = 0;
     export default {
         props: {
@@ -55,7 +57,8 @@
             return {
                 goods: [],
                 listHeight: [],
-                scrollY: 0
+                scrollY: 0,
+                selectedFood: {}
             };
         },
         computed: {
@@ -97,7 +100,13 @@
         },
         components: {
             shopcart,
-            cartcontrol
+            cartcontrol,
+            food
+        },
+        events: {
+            'cart.add'(target) {
+                this._drop(target);
+            }
         },
         methods: {
             selectMenu(index, event) {
@@ -107,6 +116,19 @@
                 let foodList = this.$refs.foodList;
                 let el = foodList[index];
                 this.foodsScroll.scrollToElement(el, 300);
+            },
+            selectFood(food, event) {
+                 if (!event._constructed) {
+                    return;
+                }
+                this.selectedFood = food;
+                this.$refs.food.show();
+            },
+            _drop(target) {
+                // 体验优化,异步执行下落动画
+                this.$nextTick(() => {
+                this.$refs.shopcart.drop(target);
+                });
             },
             _initScroll() {
                 this.menuScroll = new BScroll(this.$refs.menuWrapper, {
