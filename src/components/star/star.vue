@@ -110,6 +110,7 @@ export default {
             height: 10px;
             margin-right: 3px;
             background-size: 10px 10px;
+
             &:last-child {
                 margin-right: 0;
             }
