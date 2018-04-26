@@ -2,7 +2,7 @@
     <div class="header">
         <div class="content-wrapper">
             <div class="avatar">
-                <img width='64' height='64' :src="seller.avatar">
+                <img width='64' height='64' src="./seller_avatar_256px.jpg">
             </div>
             <div class="content">
                 <div class="title">
@@ -34,29 +34,29 @@
             <div class="detail" v-show="showDetail">
                 <div class="detail-wrapper clearfix">
                     <div class="detail-main">
-                    <h1 class="name">{{seller.name}}</h1>
-                    <div class="star-wrapper">
-                        <star :size="48" :score="seller.score"></star>
-                    </div>
-                    <div class="title">
-                        <div class="line"></div>
-                        <div class="text">优惠信息</div>
-                        <div class="line"></div>
-                    </div>
-                    <ul v-if="seller.supports" class="supports">
-                        <li class="support-item" v-for="(item,index) in seller.supports">
-                            <span class="icon" :class="classMap[seller.supports[index].type]"></span>
-                            <span class="text">{{seller.supports[index].description}}</span>
-                        </li>
-                    </ul>
-                    <div class="title">
-                        <div class="line"></div>
-                        <div class="text">商家公告</div>
-                        <div class="line"></div>
-                    </div>
-                    <div class="bulletin">
-                        <p class="content">{{seller.bulletin}}</p>
-                    </div>
+                        <h1 class="name">{{seller.name}}</h1>
+                        <div class="star-wrapper">
+                            <star :size="48" :score="seller.score"></star>
+                        </div>
+                        <div class="title">
+                            <div class="line"></div>
+                            <div class="text">优惠信息</div>
+                            <div class="line"></div>
+                        </div>
+                        <ul v-if="seller.supports" class="supports">
+                            <li class="support-item" v-for="(item,index) in seller.supports">
+                                <span class="icon" :class="classMap[seller.supports[index].type]"></span>
+                                <span class="text">{{seller.supports[index].description}}</span>
+                            </li>
+                        </ul>
+                        <div class="title">
+                            <div class="line"></div>
+                            <div class="text">商家公告</div>
+                            <div class="line"></div>
+                        </div>
+                        <div class="bulletin">
+                            <p class="content">{{seller.bulletin}}</p>
+                        </div>
                     </div>
                 </div>
                 <div class="detail-close" @click="hideDetail">
@@ -68,7 +68,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-import star from "../star/star";
+import star from '../star/star';
 export default {
   props: {
     seller: {
@@ -89,7 +89,7 @@ export default {
     }
   },
   created() {
-    this.classMap = ["decrease", "discount", "guarantee", "invoice", "special"];
+    this.classMap = ['decrease', 'discount', 'guarantee', 'invoice', 'special'];
   },
   components: {
     star

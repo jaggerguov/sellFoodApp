@@ -1,8 +1,8 @@
 <template>
     <div class="goods">
-        <div class="menu-wrapper"  ref="menuWrapper">
+        <div class="menu-wrapper" ref="menuWrapper">
             <ul>
-                <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}"  @click="selectMenu(index,$event)">
+                <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}" @click="selectMenu(index,$event)">
                     <span class="text border-1px">
                         <span v-show="item.type > 0" class="icon" :class="classMap[item.type]"></span>{{item.name}}
                     </span>
@@ -16,19 +16,21 @@
                     <ul>
                         <li v-for="(food,indx) in item.foods" class="food-item border-1px" @click="selectFood(food,$event)">
                             <div class="icon">
-                                <img width="57" height="57"  :src="food.icon">
+                                <img width="57" height="57" :src="food.icon">
                             </div>
                             <div class="content">
                                 <h2 class="name">{{food.name}}</h2>
                                 <p class="desc" v-show="food.description">{{food.description}}</p>
                                 <div class="extra">
-                                    <span>月售{{food.sellCount}}份</span><span>好评率{{food.rating}}%</span>
+                                    <span>月售{{food.sellCount}}份</span>
+                                    <span>好评率{{food.rating}}%</span>
                                 </div>
                                 <div class="price">
-                                    <span class="newPrice">¥{{food.price}}</span><span v-show="food.oldPrice" class="oldPrice">¥{{food.oldPrice}}</span>
+                                    <span class="newPrice">¥{{food.price}}</span>
+                                    <span v-show="food.oldPrice" class="oldPrice">¥{{food.oldPrice}}</span>
                                 </div>
                                 <div class="cartcontrol-wrapper">
-                                    <cartcontrol  :food="food"></cartcontrol>
+                                    <cartcontrol :food="food"></cartcontrol>
                                 </div>
                             </div>
                         </li>
@@ -36,16 +38,16 @@
                 </li>
             </ul>
         </div>
-        <shopcart ref="shopcart"  :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></shopcart>
+        <shopcart ref="shopcart" :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></shopcart>
         <food :food='selectedFood' ref="food"></food>
     </div>
-  </template>
+</template>
 
 <script type="text/ecmascript-6">
-import BScroll from "better-scroll";
-import shopcart from "../shopcart/shopcart";
-import cartcontrol from "../cartcontrol/cartcontrol";
-import food from "../food/food";
+import BScroll from 'better-scroll';
+import shopcart from '../shopcart/shopcart';
+import cartcontrol from '../cartcontrol/cartcontrol';
+import food from '../food/food';
 const ERR_OK = 0;
 export default {
   props: {
@@ -85,8 +87,8 @@ export default {
     }
   },
   created() {
-    this.classMap = ["decrease", "discount", "guarantee", "invoice", "special"];
-    this.$http.get("/api/goods").then(response => {
+    this.classMap = ['decrease', 'discount', 'guarantee', 'invoice', 'special'];
+    this.$http.get('/api/goods').then(response => {
       response = response.body;
       if (response.errno === ERR_OK) {
         this.goods = response.data;
@@ -104,7 +106,7 @@ export default {
     food
   },
   events: {
-    "cart.add"(target) {
+    'cart.add'(target) {
       this._drop(target);
     }
   },
@@ -139,7 +141,7 @@ export default {
         click: true,
         probeType: 3
       });
-      this.foodsScroll.on("scroll", pos => {
+      this.foodsScroll.on('scroll', pos => {
         // 判断滑动方向，避免下拉时分类高亮错误（如第一分类商品数量为1时，下拉使得第二分类高亮）
         if (pos.y <= 0) {
           this.scrollY = Math.abs(Math.round(pos.y));

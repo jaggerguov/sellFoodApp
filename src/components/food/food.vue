@@ -2,7 +2,7 @@
     <transition name='move'>
         <div v-show="showFlag" class="food" ref="food">
             <div class="image-header">
-                <img :src="food.image" alt="">
+                <img src="food.image" alt="">
             </div>
             <div class="back" @click="hide">
                 <i class="icon-arrow_lift"></i>
@@ -14,14 +14,15 @@
                     <span class="rating">好评率{{food.rating}}%</span>
                 </div>
                 <div class="price">
-                    <span class="newPrice">¥{{food.price}}</span><span v-show="food.oldPrice" class="oldPrice">¥{{food.oldPrice}}</span>
+                    <span class="newPrice">¥{{food.price}}</span>
+                    <span v-show="food.oldPrice" class="oldPrice">¥{{food.oldPrice}}</span>
                 </div>
                 <div class="cartcontrol-wrapper">
-                    <cartcontrol  :food="food" @add="addFood"></cartcontrol>
+                    <cartcontrol :food="food" @add="addFood"></cartcontrol>
                 </div>
                 <transition name="fade">
-                    <div class="buy" v-show="!food.count || food.count===0"  @click.stop.prevent="addFirst">加入购物车</div>
-                </transition>   
+                    <div class="buy" v-show="!food.count || food.count===0" @click.stop.prevent="addFirst">加入购物车</div>
+                </transition>
             </div>
             <split v-show="food.info"></split>
             <div class="info" v-show="food.info">
@@ -29,36 +30,35 @@
                 <p class="text">{{food.info}}</p>
             </div>
             <split></split>
-             <div class="rating">
+            <div class="rating">
                 <h1 class="title">商品信息</h1>
                 <ratingselect @select="selectRating" @toggle="toggleContent" :selectType="selectType" :onlyContent="onlyContent" :desc="desc" :ratings="food.ratings"></ratingselect>
-                 <div class="rating-wrapper">
+                <div class="rating-wrapper">
                     <ul v-show="food.ratings && food.ratings.length">
-                        <li v-show="needShow(rating.rateType,rating.text)" v-for="rating in food.ratings"
-                            class="rating-item border-1px">
+                        <li v-show="needShow(rating.rateType,rating.text)" v-for="rating in food.ratings" class="rating-item border-1px">
                             <div class="user">
-                            <span class="name">{{rating.username}}</span>
-                            <img class="avatar" width="12" height="12" :src="rating.avatar">
+                                <span class="name">{{rating.username}}</span>
+                                <img class="avatar" width="12" height="12" :src="rating.avatar">
                             </div>
                             <div class="time">{{rating.rateTime | formatDate}}</div>
                             <p class="text">
-                            <span :class="{'icon-thumb_up':rating.rateType===0,'icon-thumb_down':rating.rateType===1}"></span>{{rating.text}}
+                                <span :class="{'icon-thumb_up':rating.rateType===0,'icon-thumb_down':rating.rateType===1}"></span>{{rating.text}}
                             </p>
                         </li>
                     </ul>
                     <div class="no-rating" v-show="!food.ratings || !food.ratings.length">暂无评价</div>
                 </div>
-             </div>   
+            </div>
         </div>
     </transition>
 </template>
 <script type="text/ecmascript-6">
-import BScroll from "better-scroll";
-import Vue from "vue";
-import { formatDate } from "../../common/js/date";
-import cartcontrol from "../cartcontrol/cartcontrol";
-import split from "../split/split";
-import ratingselect from "../ratingselect/ratingselect";
+import BScroll from 'better-scroll';
+import Vue from 'vue';
+import { formatDate } from '../../common/js/date';
+import cartcontrol from '../cartcontrol/cartcontrol';
+import split from '../split/split';
+import ratingselect from '../ratingselect/ratingselect';
 const ALL = 2;
 export default {
   props: {
@@ -72,9 +72,9 @@ export default {
       selectType: ALL,
       onlyContent: true,
       desc: {
-        all: "全部",
-        positive: "推荐",
-        negative: "吐槽"
+        all: '全部',
+        positive: '推荐',
+        negative: '吐槽'
       }
     };
   },
@@ -98,11 +98,11 @@ export default {
       if (!event._constructed) {
         return;
       }
-      this.$emit("add", event.target);
-      Vue.set(this.food, "count", 1);
+      this.$emit('add', event.target);
+      Vue.set(this.food, 'count', 1);
     },
     addFood(target) {
-      this.$emit("add", target);
+      this.$emit('add', target);
     },
     needShow(type, text) {
       if (this.onlyContent && !text) {
@@ -129,7 +129,7 @@ export default {
     filters: {
       formatDate(time) {
         let date = new Date(time);
-        return formatDate(date, "yyyy-MM-dd hh:mm");
+        return formatDate(date, 'yyyy-MM-dd hh:mm');
       }
     }
   },

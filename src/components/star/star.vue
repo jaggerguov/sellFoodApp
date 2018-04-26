@@ -1,5 +1,5 @@
 <template>
-    <div class="star" :class="starType"> 
+    <div class="star" :class="starType">
         <span v-for="itemClass in itemClasses" :class="itemClass" class="star-item">
         </span>
     </div>
@@ -7,9 +7,9 @@
 
 <script type="text/ecmascript-6">
 const LENGTH = 5;
-const CLS_ON = "on";
-const CLS_HALF = "half";
-const CLS_OFF = "off";
+const CLS_ON = 'on';
+const CLS_HALF = 'half';
+const CLS_OFF = 'off';
 export default {
   props: {
     size: {
@@ -21,7 +21,7 @@ export default {
   },
   computed: {
     starType() {
-      return "star-" + this.size;
+      return 'star-' + this.size;
     },
     itemClasses() {
       let result = [];
